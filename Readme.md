@@ -23,7 +23,7 @@ Data is collected on daily basis from [John Hopkins University](https://github.c
 
 . Easiest way to run it is by using this command from your command line:
 ```
-$ streamlit run https://raw.githubusercontent.com/heyad/covid19/master/covid19_Scotland/Scotland_Covi19.py
+$ streamlit run https://raw.githubusercontent.com/heyad/covid19World/master/covid19.py
 ```
 
 Alternatively, check the [Code](covid19.py). Download and run the code as follows: 
