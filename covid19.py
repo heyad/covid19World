@@ -301,7 +301,7 @@ st.markdown('In '+'<b>'+str(days_dif) + '</b> Days of Covid19, ' +'total number 
     place_value(total_conf) +'</b>, the number of deaths is <b>'+
     str(place_value(total_deaths))+'</b>, and the total number of recovered cases is <b>'+
     place_value(total_rec)+'</b>. ' + 'Data is extracted from John Hopkins University [Github Repository](https://github.com/CSSEGISandData/COVID-19)'+
-    ' and last updated on <b>'+str(pd.to_datetime(max(covid19['Date'])).strftime("%d-%m-%y"))+'</b>',True)
+    ' and last updated on <b>'+str(pd.to_datetime(max(covid19['Date'])).strftime("%d-%m-%y"))+'</b>' +'. <p>Code is availble at [https://github.com/heyad/covid19World](https://github.com/heyad/covid19World)',True)
 covid_days = 1
 
 
@@ -370,10 +370,10 @@ def plot_countries_daily(countries='all',cases='Confirmed',startDate='2020-1-21'
     #temp['Date'] = temp['Date'].dt.strftime('%d-%m-%Y')
 
     if (bar==False):
-        fig = px.line(temp, x="Date", y='Mean', color='Country',  height=500,
+        fig = px.line(temp, x="Date", y='Daily', color='Country',  height=500,
            facet_col='Country', facet_col_wrap=facet_cols,template='plotly_white')
     else:
-        fig = px.bar(temp, x="Date", y='Mean', color='Country',  height=400,
+        fig = px.bar(temp, x="Date", y='Daily', color='Country',  height=400,
            facet_col='Country', facet_col_wrap=facet_cols,template='plotly_white',text=temp['Daily'])
         fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 
@@ -530,7 +530,8 @@ def plot_countries_oneD(countries=[],weekly=True, cases='Confirmed',start_date=s
             fig.add_trace(go.Scatter(
                 x=tmp['Week'],
                 y=tmp['Cases'],
-                name=cases+ " Cases ("+str(countries[i])+")"
+                name=cases+ " Cases ("+str(countries[i])+")",
+                mode='lines+markers'
             ))
 
 
@@ -553,7 +554,8 @@ def plot_countries_oneD(countries=[],weekly=True, cases='Confirmed',start_date=s
             fig.add_trace(go.Scatter(
                 x=tmp['Date'],
                 y=tmp['Cases'],
-                name=cases+ " Cases ("+str(countries[i])+")"
+                name=cases+ " Cases ("+str(countries[i])+")",
+                mode='lines+markers'
             ))
 
 
