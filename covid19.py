@@ -128,6 +128,7 @@ df_confirmed, df_deaths,df_recovered,top_conf= read_files(date.today().isoformat
 covid19,df_covid19,df_grouped = prepare_data(date.today().isoformat())
 
 
+
 ### Fill missing values with zeros 
 
 # EU countries 
@@ -141,7 +142,11 @@ arabs = ['Jordan','Egypt','Saudi Arabia','Qatar','Bahrain','Iraq','Algeria','Mor
          'Lybia','Union of the Comoros','Somali','Palestine']
 
 
+df_grouped.sort_values(by='Confirmed',ascending=False,inplace=True)
+top_conf = df_grouped['Country'].to_list()
+
 # by deaths
+
 df_grouped.sort_values(by='Deaths',ascending=False,inplace=True)
 top_death = df_grouped['Country'].to_list()
 # by recovered
@@ -333,6 +338,7 @@ def plot_countries_daily(countries='all',cases='Confirmed',startDate='2020-1-21'
                          endDate='2020-3-22',title='Date',facet_cols=2,bar=False,line=True,logs=False):
     
     temp = covid19.loc[covid19['Country'].isin(countries),:].copy()
+
     #temp = covid19[(covid19.Country.isin(countries))].copy()
     temp['Date'] = pd.to_datetime(temp['Date'])
 
@@ -398,8 +404,9 @@ def plot_countries_daily(countries='all',cases='Confirmed',startDate='2020-1-21'
 
 def plot_countries_daily_s(startDate,endDate,n):
      
-        
         n = 10
+        df_grouped.sort_values(by='Confirmed',ascending=False,inplace=True)
+        top_conf = df_grouped['Country'].to_list()
         if regions=='Worldwide':
             st.plotly_chart(plot_countries_daily(top_conf[:number_s],
                 covid19_cases,startDate,endDate,
@@ -576,6 +583,8 @@ def plot_specific_country(startDate,endDate,bar=True,line=False,log=False):
         if covid19_cases=='Confirmed':
                 # selection box won't work if the list is too long 
                 if regions == 'Worldwide':
+                    df_grouped.sort_values(by='Confirmed',ascending=False,inplace=True)
+                    top_conf = df_grouped['Country'].to_list()
                     country = st.sidebar.selectbox('',top_conf)
                     st.plotly_chart(plot_countries_daily([country],
                     covid19_cases,startDate,endDate,
@@ -725,29 +734,4 @@ if show_tables:
     show_top_countries_list(number_s)
 
 
-#33
-# dlkj 
-# px.set_mapbox_access_token(secret_value_0)
-# fig = px.scatter_mapbox(df_hotspots,
-#                         lat="latitude",
-#                         lon="longitude",
-#                         size="confirmed",
-#                         hover_data=['infection_case','city','province'],
-#                         zoom=5,
-#                         size_max=50,
-#                         title= 'COVID19 Hotspots in South Korea')
-# fig.show()
 
-
-
-# df = df_plot.query("Country_Region=='India'")
-# df.reset_index(inplace = True)
-# df = add_daily_measures(df)
-# fig = go.Figure(data=[
-#     go.Bar(name='Cases', x=df['Date'], y=df['Daily Cases']),
-#     go.Bar(name='Deaths', x=df['Date'], y=df['Daily Deaths'])
-# ])
-# # Change the bar mode
-# fig.update_layout(barmode='overlay', title='Daily Case and Death count(India)',
-#                  annotations=[dict(x='2020-03-23', y=106, xref="x", yref="y", text="Lockdown Imposed(23rd March)", showarrow=True, arrowhead=1, ax=-100, ay=-100)])
-# fig.show()
