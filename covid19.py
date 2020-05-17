@@ -143,7 +143,14 @@ arabs = ['Jordan','Egypt','Saudi Arabia','Qatar','Bahrain','Iraq','Algeria','Mor
 
 
 df_grouped.sort_values(by='Confirmed',ascending=False,inplace=True)
-top_conf = df_grouped['Country'].to_list()
+
+# here 
+df = pd.DataFrame(df_grouped['Country'].to_list()).reset_index()
+df.columns = ['Index','Country']
+#st.write(df.head(10))
+
+###
+top_conf = df['Country'].to_list()
 
 # by deaths
 
