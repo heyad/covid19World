@@ -51,11 +51,11 @@ def read_files(date_update = date.today().isoformat()):
 
     # get the dates 
     df_confirmed=df_confirmed.reset_index(drop=True)
-    dfl = pd.read_csv('countries.csv')
-    dfl.columns = ['Index','Country']
+    df = pd.read_csv('countries.csv')
+    df.columns = ['Index','Country']
     #st.write(df.head(10))
 
-    countries = dfl['Country'].to_list()
+    countries = df['Country'].to_list()
     
     return (df_confirmed,df_deaths,df_recovered,countries)
 
@@ -710,7 +710,7 @@ if show_totals:
 countries_cumm_sums = st.sidebar.checkbox('Total Numbers',0)
             #st.write(str(top_conf))
 if countries_cumm_sums:
-    countries_m = st.sidebar.multiselect('Select Country/s', top_conf, default=top_conf[:10])
+    countries_m = st.sidebar.multiselect('Select Country/s', top_conf, default=top_conf[:1])
     weekly = st.sidebar.radio("Weekly?", 
     ['Weeks','Days'])
     weeks = (weekly=='Weeks')
@@ -728,11 +728,10 @@ plot_specific_country(start_date,end_date,plot_bar,plot_line,log_plot)
 
 compare_countries_by_cases = st.sidebar.checkbox('Compare Countries Numbers',0,'uniquecomparecountriesnumber')
 if compare_countries_by_cases:
-    countries_m = st.sidebar.multiselect('Select one or more Country', top_conf, default=top_conf[:10],key=12345690)
+    countries_m = st.sidebar.multiselect('Select one or more Country', top_conf, default=top_conf[:1],key=12345690)
     weekly = st.sidebar.radio("Weekly?", 
     ['Weeks','Days'],key=123)
     weeks = (weekly=='Weeks')
-    #st.write(countries_m)
     fig = plot_countries_oneD(countries_m,weeks,covid19_cases,start_date,end_date)
     st.plotly_chart(fig)
 
@@ -740,5 +739,6 @@ show_tables = st.checkbox('Show List of Countries',)
 if show_tables:
     st.markdown('List of top countries by number casesthe')
     show_top_countries_list(number_s)
+
 
 
